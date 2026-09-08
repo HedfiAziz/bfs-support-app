@@ -162,5 +162,21 @@ def admin_logout():
     session.pop('admin_logged_in', None)
     return redirect(url_for('admin_login'))
 
+@app.route('/robots.txt')
+def robots():
+    content = "User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: https://bfs-support-app.onrender.com/sitemap.xml"
+    return content, 200, {'Content-Type': 'text/plain'}
+
+@app.route('/sitemap.xml')
+def sitemap():
+    content = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://bfs-support-app.onrender.com/</loc>
+    <priority>1.00</priority>
+  </url>
+</urlset>"""
+    return content, 200, {'Content-Type': 'application/xml'}
+
 if __name__ == '__main__':
     app.run(debug=True)
