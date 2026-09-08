@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFS Solutions | Connexion Administration</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="background-color: #092c3e; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+
+    <div class="form-card" style="width: 100%; max-width: 400px; padding: 40px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="BFS Solutions Logo" style="max-height: 48px; margin-bottom: 15px;" onerror="this.style.display='none'; document.getElementById('alt-logo-admin').style.display='block';">
+            <span id="alt-logo-admin" style="display:none; font-size: 22px; font-weight: 800; color: #092c3e;">BFS SOLUTIONS</span>
+            <h3 style="font-size: 16px; color: #64748b; font-weight: 500; margin-top: 5px;">Espace Administration Support</h3>
+        </div>
+
+        {% if error %}
+            <div style="background-color: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 12px; border-radius: 6px; font-size: 13px; margin-bottom: 20px; text-align: center;">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form action="/admin/login" method="POST">
+            <div class="form-group">
+                <label for="password">Mot de passe Administrateur</label>
+                <input type="password" id="password" name="password" placeholder="Saisissez votre mot de passe" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+            </div>
+            <button type="submit" class="btn-submit" style="width: 100%; margin-top: 10px;">
+                Se connecter
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

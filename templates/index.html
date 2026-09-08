@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFS | Portail Support & Déclaration d'incidents Sage XRT</title>
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png">
+    <!-- Importation de la police Google Fonts : Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- En-tête officiel -->
+    <header class="top-header">
+        <div class="header-container">
+            <div class="logo-wrapper">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="BFS Solutions Logo" class="brand-logo" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
+                <span id="alt-logo" class="logo-text-fallback" style="display:none;">BFS <span>SOLUTIONS</span></span>
+            </div>
+            <div class="header-contact-info">
+                <span>Assistance : (+216) 98 29 36 47</span>
+                <span class="badge-partner">Partenaire Sage XRT — Top 5 Export</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bannière Hero -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h2>Portail de Déclaration d'Incidents & Assistance</h2>
+            <p>Transmettez votre demande directement à nos équipes techniques expertes Sage XRT & Cash Management.</p>
+        </div>
+    </section>
+
+    <!-- Conteneur du Formulaire -->
+    <main class="main-container">
+        <div class="form-card">
+            <form action="/submit" method="POST" enctype="multipart/form-data">
+                
+                <div class="form-section">
+                    <h3 class="section-title"><span class="step-num">1</span> Coordonnées du Client</h3>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="entreprise">Raison Sociale / Entreprise *</label>
+                            <input type="text" id="entreprise" name="entreprise" placeholder="ex: Poulina Group, Danone, Aziza..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom_prenom">Nom & Prénom du Demandeur *</label>
+                            <input type="text" id="nom_prenom" name="nom_prenom" placeholder="ex: Mohamed Ben Ali" required>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="telephone">Téléphone Direct *</label>
+                            <input type="tel" id="telephone" name="telephone" placeholder="+216 98 000 000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Adresse Email Professionnelle *</label>
+                            <input type="email" id="email" name="email" placeholder="nom@entreprise.tn" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="section-title"><span class="step-num">2</span> Qualification de l'Incident</h3>
+                    
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="module">Solution concernée *</label>
+                            <select id="module" name="module" required>
+                                <option value="">-- Sélectionnez votre produit --</option>
+                                <option value="Sage XRT Treasury">Sage XRT Treasury (Gestion de Trésorerie)</option>
+                                <option value="Sage XRT Business Exchange">Sage XRT Business Exchange (Télétransmission)</option>
+                                <option value="Sage XRT Online Banking">Sage XRT Online Banking (Connectivité Bancaire)</option>
+                                <option value="Sage SXA">Sage SXA (Automation Financière)</option>
+                                <option value="BFS Treasury Analytics Power BI">BFS Treasury Analytics for Power BI</option>
+                                <option value="Signature Électronique">Signature Électronique Anti-fraude / Validation Mobile</option>
+                                <option value="Autre / Support Technique">Autre / Support Technique Général</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="urgence">Niveau d'Urgence *</label>
+                            <select id="urgence" name="urgence" required>
+                                <option value="Faible">Faible — Demande d'information ou assistance</option>
+                                <option value="Moyenne" selected>Moyenne — Anomalie non bloquante</option>
+                                <option value="Haute">Haute — Traitement ou module partiellement ralenti</option>
+                                <option value="Critique">Critique — Blocage total des flux bancaires / trésorerie</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sujet">Intitulé / Objet du problème *</label>
+                        <input type="text" id="sujet" name="sujet" placeholder="ex: Erreur lors de la télétransmission du fichier CFONB" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description détaillée du dysfonctionnement *</label>
+                        <textarea id="description" name="description" rows="5" placeholder="Détaillez le message d'erreur affiché, le code d'erreur ou les étapes pour reproduire le problème..." required></textarea>
+                    </div>
+
+                    <div class="form-group file-upload-box">
+                        <label for="fichier" class="file-label">
+                            <strong>Joindre une pièce jointe (Optionnel)</strong>
+                            <small>Formats acceptés : PNG, JPG, PDF, ZIP, LOG (Max: 10 Mo)</small>
+                        </label>
+                        <input type="file" id="fichier" name="fichier">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">
+                        Transmettre la demande au Support BFS
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer Officiel BFS Solutions -->
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Colonne 1 : Logo & Présentation -->
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="BFS Solutions Logo" class="brand-logo-footer" onerror="this.style.display='none'; document.getElementById('alt-logo-footer').style.display='block';">
+                    <span id="alt-logo-footer" class="footer-logo-text" style="display:none;">BFS <span>SOLUTIONS</span></span>
+                </div>
+                <p>Expert du Cash Management, de la Digitalisation Financière et du Pilotage de Trésorerie.</p>
+                
+                <p class="footer-link"><a href="https://www.linkedin.com/in/imed-lakhdhar-2a569b42/" target="_blank" rel="noopener">LinkedIn</a></p>
+            </div>
+
+
+            <!-- Colonne 2 : Navigation -->
+            <div class="footer-col">
+                <h4>NAVIGATION</h4>
+                <ul>
+                    <li><a href="https://bfs.tn/">Accueil</a></li>
+                    <li><a href="https://bfs.tn/a-propos">À propos</a></li>
+                    <li><a href="https://bfs.tn/secteurs">Secteurs</a></li>
+                    <li><a href="https://bfs.tn/references">Références</a></li>
+                    <li><a href="https://bfs.tn/temoignages">Témoignages</a></li>
+                    <li><a href="https://bfs.tn/carrieres">Carrières</a></li>
+                    <li><a href="https://bfs.tn/actualites">Actualités</a></li>
+                    <li><a href="https://bfs.tn/contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Colonne 3 : Solutions -->
+            <div class="footer-col">
+                <h4>NOS SOLUTIONS</h4>
+                <ul>
+                    <li>Sage XRT Treasury</li>
+                    <li>Sage XRT Business Exchange</li>
+                    <li>Sage XRT Online Banking</li>
+                    <li>Sage SXA</li>
+                    <li>BFS Treasury Analytics for Power BI</li>
+                    <li>SAV & Support</li>
+                </ul>
+            </div>
+
+            <!-- Colonne 4 : Contact Complet -->
+            <div class="footer-col">
+                <h4>CONTACT</h4>
+                <p>
+                    Immeuble Carthagène, 2ème Etage, Bureau N°13<br>
+                    Les Jardins de Carthage<br>
+                    Tunis, Tunisie
+                </p>
+                <p class="contact-details">
+                    (+216) 98 29 36 47<br>
+                    (+216) 25 29 36 47<br>
+                    (+216) 71 26 54 33
+                </p>
+                <p class="contact-emails">
+                    contact@bfs.tn<br>
+                    bfs@topnet.tn<br>
+                    imed.lakhdhar@bfs.tn
+                </p>
+                <p><a href="https://www.bfs.tn" target="_blank" rel="noopener" class="footer-web">www.bfs.tn</a></p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 BFS Solutions — Tous droits réservés | Portail Support TMA / AMS</p>
+        </div>
+    </footer>
+
+</body>
+</html>
