@@ -1,0 +1,329 @@
+/* =========================================================
+   BFS SOLUTIONS - CHARTE GRAPHIQUE OFFICIELLE (STRICT)
+   ========================================================= */
+
+:root {
+    --bfs-navy: #092c3e;
+    --bfs-teal-dark: #0a4d68;
+    --bfs-blue: #086385;
+    --bfs-accent: #0284c7;
+    --bfs-light-bg: #f8fafc;
+    --bfs-card-border: #e2e8f0;
+    --bfs-text: #1e293b;
+    --bfs-text-muted: #64748b;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bfs-light-bg);
+    color: var(--bfs-text);
+    line-height: 1.6;
+}
+
+/* Header */
+.top-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--bfs-card-border);
+    padding: 15px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo {
+    max-height: 48px;
+    width: auto;
+}
+
+.logo-text-fallback {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--bfs-navy);
+    letter-spacing: -0.5px;
+}
+
+.logo-text-fallback span {
+    color: var(--bfs-accent);
+}
+
+.header-contact-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--bfs-text-muted);
+}
+
+.badge-partner {
+    background-color: #e0f2fe;
+    color: var(--bfs-blue);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid #bae6fd;
+}
+
+/* Hero Banner */
+.hero-banner {
+    background: linear-gradient(135deg, var(--bfs-navy) 0%, var(--bfs-teal-dark) 100%);
+    color: #ffffff;
+    padding: 45px 20px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-banner h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.hero-banner p {
+    font-size: 15px;
+    color: #e0f2fe;
+}
+
+/* Form Container */
+.main-container {
+    max-width: 850px;
+    margin: -30px auto 60px auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.form-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--bfs-card-border);
+}
+
+.form-section {
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--bfs-card-border);
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--bfs-navy);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.step-num {
+    background-color: var(--bfs-blue);
+    color: #ffffff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 650px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--bfs-navy);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid var(--bfs-card-border);
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: var(--bfs-text);
+    transition: border-color 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--bfs-accent);
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.file-upload-box {
+    background-color: var(--bfs-light-bg);
+    border: 1px dashed var(--bfs-card-border);
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+}
+
+.file-label strong {
+    display: block;
+    color: var(--bfs-navy);
+    margin-bottom: 4px;
+}
+
+.file-label small {
+    display: block;
+    color: var(--bfs-text-muted);
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: var(--bfs-teal-dark);
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: var(--bfs-navy);
+}
+
+/* Footer Officiel */
+.footer {
+    background-color: var(--bfs-teal-dark);
+    color: #ffffff;
+    padding: 50px 20px 20px 20px;
+    margin-top: 60px;
+    font-size: 14px;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.brand-logo-footer {
+    max-height: 45px;
+    width: auto;
+    margin-bottom: 15px;
+    display: block;
+    /* Enlève la couleur du logo et le rend blanc pur pour qu'il ressorte sur le fond sombre. 
+       Si votre logo est déjà blanc, vous pouvez supprimer la ligne ci-dessous. */
+    filter: brightness(0) invert(1);
+}
+
+.footer-logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.footer-logo-text span {
+    color: #38bdf8;
+}
+
+.footer-col h4 {
+    color: #ffffff;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+    font-weight: 700;
+}
+
+.footer-col p {
+    color: #e0f2fe;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 8px;
+    color: #e0f2fe;
+}
+
+.footer-col ul li a, .footer-link a, .footer-web {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-col ul li a:hover, .footer-link a:hover, .footer-web:hover {
+    text-decoration: underline;
+}
+
+.contact-details, .contact-emails {
+    margin-top: 10px;
+    line-height: 1.8;
+}
+
+.footer-bottom {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+}
