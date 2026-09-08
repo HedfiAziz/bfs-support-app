@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFS Solutions | Confirmation de réception</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- En-tête officiel -->
+    <header class="top-header">
+        <div class="header-container">
+            <div class="logo-wrapper">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="BFS Solutions Logo" class="brand-logo" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
+                <span id="alt-logo" class="logo-text-fallback" style="display:none;">BFS <span>SOLUTIONS</span></span>
+            </div>
+            <div class="header-contact-info">
+                <span>Assistance : (+216) 98 29 36 47</span>
+                <span class="badge-partner">Partenaire Sage XRT — Top 5 Export</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="main-container" style="margin-top: 40px;">
+        <div class="form-card" style="text-align: center; padding: 50px 30px;">
+            <div style="background-color: #e0f2fe; color: #086385; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; font-size: 28px; font-weight: bold;">
+                ✓
+            </div>
+            
+            <h2 style="color: #092c3e; font-size: 24px; margin-bottom: 15px;">Demande transmise avec succès</h2>
+            
+            <p style="color: #64748b; max-width: 600px; margin: 0 auto 30px auto; font-size: 15px; line-height: 1.6;">
+                Nous avons bien enregistré votre déclaration d'incident. Notre équipe technique prendra en charge votre ticket dans les plus brefs délais.
+            </p>
+
+            <!-- Récapitulatif du Ticket -->
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: left; max-width: 520px; margin: 0 auto 30px auto;">
+                <p style="margin-bottom: 10px; font-size: 14px; color: #092c3e;"><strong>Référence du Ticket :</strong> #{{ ticket.id }}</p>
+                <p style="margin-bottom: 10px; font-size: 14px; color: #092c3e;"><strong>Entreprise :</strong> {{ ticket.entreprise }}</p>
+                <p style="margin-bottom: 10px; font-size: 14px; color: #092c3e;"><strong>Demandeur :</strong> {{ ticket.nom_prenom }} ({{ ticket.email }})</p>
+                <p style="margin-bottom: 10px; font-size: 14px; color: #092c3e;"><strong>Solution :</strong> {{ ticket.module }}</p>
+                <p style="margin-bottom: 10px; font-size: 14px; color: #092c3e;"><strong>Urgence :</strong> {{ ticket.urgence }}</p>
+                <p style="font-size: 14px; color: #092c3e;"><strong>Sujet :</strong> {{ ticket.sujet }}</p>
+            </div>
+
+            <a href="/" class="btn-submit" style="display: inline-block; width: auto; padding: 14px 32px; text-decoration: none;">
+                Déclarer un autre incident
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer Officiel BFS Solutions -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="BFS Solutions Logo" class="brand-logo-footer" onerror="this.style.display='none'; document.getElementById('alt-logo-footer').style.display='block';">
+                    <span id="alt-logo-footer" class="footer-logo-text" style="display:none;">BFS <span>SOLUTIONS</span></span>
+                </div>
+                <p>Expert du Cash Management, de la Digitalisation Financière et du Pilotage de Trésorerie.</p>
+                <p class="footer-link"><a href="https://www.linkedin.com/in/imed-lakhdhar-2a569b42/" target="_blank" rel="noopener">LinkedIn</a></p>
+            </div>
+
+            <div class="footer-col">
+                <h4>NAVIGATION</h4>
+                <ul>
+                    <li><a href="https://bfs.tn/">Accueil</a></li>
+                    <li><a href="https://bfs.tn/a-propos">À propos</a></li>
+                    <li><a href="https://bfs.tn/secteurs">Secteurs</a></li>
+                    <li><a href="https://bfs.tn/references">Références</a></li>
+                    <li><a href="https://bfs.tn/temoignages">Témoignages</a></li>
+                    <li><a href="https://bfs.tn/carrieres">Carrières</a></li>
+                    <li><a href="https://bfs.tn/actualites">Actualités</a></li>
+                    <li><a href="https://bfs.tn/contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>NOS SOLUTIONS</h4>
+                <ul>
+                    <li>Sage XRT Treasury</li>
+                    <li>Sage XRT Business Exchange</li>
+                    <li>Sage XRT Online Banking</li>
+                    <li>Sage SXA</li>
+                    <li>BFS Treasury Analytics for Power BI</li>
+                    <li>SAV & Support</li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>CONTACT</h4>
+                <p>
+                    Immeuble Carthagène, 2ème Etage, Bureau N°13<br>
+                    Les Jardins de Carthage<br>
+                    Tunis, Tunisie
+                </p>
+                <p class="contact-details">
+                    (+216) 98 29 36 47<br>
+                    (+216) 25 29 36 47<br>
+                    (+216) 71 26 54 33
+                </p>
+                <p class="contact-emails">
+                    contact@bfs.tn<br>
+                    bfs@topnet.tn<br>
+                    imed.lakhdhar@bfs.tn
+                </p>
+                <p><a href="https://www.bfs.tn" target="_blank" rel="noopener" class="footer-web">www.bfs.tn</a></p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 BFS Solutions — Tous droits réservés | Portail Support TMA / AMS</p>
+        </div>
+    </footer>
+
+</body>
+</html>
