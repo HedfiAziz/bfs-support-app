@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        /* Styles spécifiques au Dashboard Admin Pro */
         .kpi-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -38,24 +37,73 @@
             color: #092c3e;
         }
 
-        /* Search Bar */
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+        /* BARRE DE FILTRES MULTI-CRITÈRES */
+        .filter-section {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
         }
-        .search-input {
-            padding: 10px 16px;
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .filter-group label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+        }
+        .filter-control {
+            padding: 9px 12px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
-            font-size: 14px;
-            width: 320px;
+            font-size: 13px;
+            outline: none;
+            background-color: #f8fafc;
+        }
+        .filter-control:focus {
+            border-color: #0a4d68;
+            background-color: #ffffff;
+        }
+        .btn-reset {
+            background-color: #e2e8f0;
+            color: #475569;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-reset:hover {
+            background-color: #cbd5e1;
         }
 
-        /* Modal Details */
+        .select-status {
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            outline: none;
+            text-align: center;
+        }
+        .status-nouveau { background-color: #e0f2fe; color: #0284c7; border-color: #bae6fd; }
+        .status-en-cours { background-color: #ffedd5; color: #ea580c; border-color: #fdba74; }
+        .status-cloture { background-color: #dcfce7; color: #16a34a; border-color: #bbf7d0; }
+
         .modal-overlay {
             display: none;
             position: fixed;
@@ -69,7 +117,7 @@
         .modal-card {
             background: #ffffff;
             width: 100%;
-            max-width: 650px;
+            max-width: 750px;
             border-radius: 8px;
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
             overflow: hidden;
@@ -84,73 +132,93 @@
         }
         .modal-body {
             padding: 24px;
-            max-height: 75vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
-        .modal-field {
-            margin-bottom: 16px;
-        }
-        .modal-field label {
-            font-size: 11px;
-            color: #64748b;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .modal-field p {
-            font-size: 14px;
-            color: #092c3e;
-            line-height: 1.5;
-            word-break: break-word;
-        }
-        .modal-description-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            border-radius: 6px;
-            white-space: pre-wrap;
-            font-size: 14px;
-            color: #1e293b;
-        }
-        .btn-close {
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .btn-view {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            border: 1px solid #bae6fd;
-            padding: 5px 10px;
+
+        .btn-action {
+            padding: 6px 12px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
         }
-        .btn-view:hover {
-            background-color: #bae6fd;
-        }
-        .btn-delete {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 8px;
-        }
-        .btn-delete:hover {
-            text-decoration: underline;
-        }
+        .btn-view { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+        .btn-reply { background-color: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
+        .btn-invoice { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+        .btn-delete { background: none; border: none; color: #ef4444; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+        @media print {
+    /* Force le format A4 en mode Portrait sans marges parasites */
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
+
+    body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Cache tout le reste de la page */
+    body * {
+        visibility: hidden !important;
+    }
+
+    /* Désactive les contraintes de défilement (scrollbars) et conteneurs */
+    #invoiceOverlay, .modal-card, .modal-body {
+        position: static !important;
+        display: block !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        overflow: visible !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Rend visible uniquement la zone de la facture */
+    #invoicePrintArea, #invoicePrintArea * {
+        visibility: visible !important;
+    }
+
+    #invoicePrintArea {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        padding: 15mm !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Masquage des éléments non imprimables */
+    .no-print {
+        display: none !important;
+    }
+
+    .print-only {
+        display: inline !important;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
+        .print-only { display: none; }
     </style>
 </head>
 <body style="background-color: #f1f5f9;">
 
-    <!-- En-tête Admin -->
     <header class="top-header">
-        <div class="header-container" style="max-width: 1200px;">
+        <div class="header-container" style="max-width: 1300px;">
             <div class="logo-wrapper" style="display: flex; align-items: center; gap: 15px;">
                 <img src="{{ url_for('static', filename='logo.png') }}" alt="BFS Solutions Logo" class="brand-logo" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
                 <span id="alt-logo" class="logo-text-fallback" style="display:none;">BFS <span>SOLUTIONS</span></span>
@@ -162,118 +230,185 @@
         </div>
     </header>
 
-    <main style="max-width: 1200px; margin: 30px auto; padding: 0 20px;">
+    <main style="max-width: 1300px; margin: 30px auto; padding: 0 20px;">
         
-        <!-- Cartes KPIs -->
+        <!-- INDICATEURS CLÉS (KPI) -->
         <div class="kpi-container">
-            <div class="kpi-card">
-                <div class="kpi-title">Total Incidents</div>
-                <div class="kpi-value">{{ stats.total }}</div>
-            </div>
-            <div class="kpi-card" style="border-left: 4px solid #0284c7;">
-                <div class="kpi-title">Nouveaux</div>
-                <div class="kpi-value" style="color: #0284c7;">{{ stats.nouveaux }}</div>
-            </div>
             <div class="kpi-card" style="border-left: 4px solid #dc2626;">
                 <div class="kpi-title">Urgence Critique</div>
                 <div class="kpi-value" style="color: #dc2626;">{{ stats.critiques }}</div>
             </div>
+            <div class="kpi-card" style="border-left: 4px solid #0284c7;">
+                <div class="kpi-title">Nouveau</div>
+                <div class="kpi-value" style="color: #0284c7;">{{ stats.nouveaux }}</div>
+            </div>
+            <div class="kpi-card" style="border-left: 4px solid #ea580c;">
+                <div class="kpi-title">En Cours</div>
+                <div class="kpi-value" style="color: #ea580c;">{{ stats.en_cours }}</div>
+            </div>
             <div class="kpi-card" style="border-left: 4px solid #16a34a;">
-                <div class="kpi-title">Résolus</div>
+                <div class="kpi-title">Clôturé</div>
                 <div class="kpi-value" style="color: #16a34a;">{{ stats.resolus }}</div>
             </div>
         </div>
 
-        <!-- Toolbar : Recherche & Export -->
-        <div class="toolbar">
-            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Rechercher (Entreprise, Sujet, Demandeur...)" class="search-input">
-            
-            <div style="display: flex; gap: 10px;">
-                <a href="/admin/export_csv" style="background-color: #0a4d68; color: #ffffff; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">
-                    Exporter au format CSV (Excel)
-                </a>
-                <a href="/" target="_blank" style="background-color: #ffffff; border: 1px solid #cbd5e1; color: #092c3e; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">
-                    Ouvrir le formulaire
-                </a>
+        <!-- MODULE DE FILTRES AVANCÉS -->
+        <div class="filter-section">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label>Recherche Client / Sujet</label>
+                    <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Nom, entreprise, mot-clé..." class="filter-control">
+                </div>
+
+                <div class="filter-group">
+                    <label>Filtrer par Statut</label>
+                    <select id="filterStatus" onchange="applyFilters()" class="filter-control">
+                        <option value="ALL">Tous les statuts</option>
+                        <option value="Nouveau">Nouveau</option>
+                        <option value="En cours">En cours</option>
+                        <option value="Résolu">Clôturé / Résolu</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Filtrer par Urgence</label>
+                    <select id="filterUrgency" onchange="applyFilters()" class="filter-control">
+                        <option value="ALL">Toutes les urgences</option>
+                        <option value="Critique">Critique</option>
+                        <option value="Haute">Haute</option>
+                        <option value="Normale">Normale</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Filtrer par Module</label>
+                    <select id="filterModule" onchange="applyFilters()" class="filter-control">
+                        <option value="ALL">Tous les modules</option>
+                        {% set modules = tickets | map(attribute='module') | unique | list %}
+                        {% for mod in modules %}
+                            {% if mod %}
+                                <option value="{{ mod }}">{{ mod }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="resetFilters()" class="btn-reset" title="Effacer tous les filtres">Réinitialiser</button>
+                    <a href="/admin/export_csv" style="background-color: #0a4d68; color: #ffffff; padding: 10px 14px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; white-space: nowrap;">
+                        Exporter CSV
+                    </a>
+                </div>
             </div>
         </div>
 
-        <!-- Tableau des tickets -->
+        <!-- TABLEAU DES TICKETS -->
         <div style="background-color: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow-x: auto;">
             <table id="ticketsTable" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
                 <thead>
                     <tr style="background-color: #0a4d68; color: #ffffff;">
-                        <th style="padding: 14px 16px;">#ID</th>
-                        <th style="padding: 14px 16px;">Date</th>
-                        <th style="padding: 14px 16px;">Entreprise & Contact</th>
-                        <th style="padding: 14px 16px;">Solution</th>
-                        <th style="padding: 14px 16px;">Sujet</th>
-                        <th style="padding: 14px 16px;">Urgence</th>
-                        <th style="padding: 14px 16px;">Statut</th>
-                        <th style="padding: 14px 16px; text-align: center;">Actions</th>
+                        <th style="padding: 14px;">#ID</th>
+                        <th style="padding: 14px;">Date</th>
+                        <th style="padding: 14px;">Entreprise & Contact</th>
+                        <th style="padding: 14px;">Module & Sujet</th>
+                        <th style="padding: 14px;">Urgence</th>
+                        <th style="padding: 14px; text-align: center;">Temps (H)</th>
+                        <th style="padding: 14px;">Statut</th>
+                        <th style="padding: 14px; text-align: center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% if tickets %}
                         {% for ticket in tickets %}
-                        <tr style="border-bottom: 1px solid #f1f5f9; vertical-align: middle;">
-                            <td style="padding: 14px 16px; font-weight: 700; color: #092c3e;">#{{ ticket.id }}</td>
-                            <td style="padding: 14px 16px; color: #64748b; white-space: nowrap;">{{ ticket.date_creation.strftime('%d/%m/%Y %H:%M') if ticket.date_creation else 'N/A' }}</td>
-                            <td style="padding: 14px 16px;">
-                                <strong style="color: #092c3e; display: block; font-size: 14px;">{{ ticket.entreprise }}</strong>
+                        <tr style="border-bottom: 1px solid #f1f5f9; vertical-align: middle;"
+                            data-status="{{ ticket.statut }}"
+                            data-urgency="{{ ticket.urgence }}"
+                            data-module="{{ ticket.module }}"
+                            data-client="{{ ticket.entreprise }} {{ ticket.nom_prenom }}">
+                            <td style="padding: 14px; font-weight: 700;">#{{ ticket.id }}</td>
+                            <td style="padding: 14px; color: #64748b; white-space: nowrap;">{{ ticket.date_creation.strftime('%d/%m/%Y %H:%M') if ticket.date_creation else 'N/A' }}</td>
+                            <td style="padding: 14px;">
+                                <strong style="color: #092c3e; display: block;">{{ ticket.entreprise }}</strong>
                                 <span style="color: #475569;">{{ ticket.nom_prenom }}</span>
                             </td>
-                            <td style="padding: 14px 16px; font-weight: 600; color: #086385;">{{ ticket.module }}</td>
-                            <td style="padding: 14px 16px; max-width: 220px;">
-                                <strong style="color: #092c3e; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ ticket.sujet }}</strong>
+                            <td style="padding: 14px; max-width: 250px;">
+                                <span style="font-size: 11px; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: 600;">{{ ticket.module }}</span>
+                                <strong style="color: #092c3e; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 4px;">{{ ticket.sujet }}</strong>
                             </td>
-                            <td style="padding: 14px 16px;">
+                            <td style="padding: 14px;">
                                 {% if ticket.urgence == 'Critique' %}
                                     <span style="background-color: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;">CRITIQUE</span>
                                 {% elif ticket.urgence == 'Haute' %}
                                     <span style="background-color: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 11px;">HAUTE</span>
-                                {% elif ticket.urgence == 'Moyenne' %}
-                                    <span style="background-color: #fefce8; color: #ca8a04; border: 1px solid #fef08a; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 11px;">MOYENNE</span>
                                 {% else %}
-                                    <span style="background-color: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 11px;">FAIBLE</span>
+                                    <span style="background-color: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 11px;">NORMALE</span>
                                 {% endif %}
                             </td>
-                            <td style="padding: 14px 16px;">
-                                <form action="/admin/update_status/{{ ticket.id }}" method="POST" style="display: flex; gap: 4px;">
-                                    <select name="statut" style="padding: 4px 6px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 4px;" onchange="this.form.submit()">
+                            <td style="padding: 14px; text-align: center;">
+                                <form action="/admin/update_temps/{{ ticket.id }}" method="POST" style="display: inline-flex; gap: 4px; align-items: center; margin: 0;">
+                                    <input type="number" name="temps_estime" value="{{ ticket.temps_estime or 0 }}" step="0.5" min="0" style="width: 55px; padding: 5px; text-align: center; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; font-weight: 700;">
+                                    <button type="submit" title="Enregistrer le temps" style="background: #0a4d68; color: white; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 700;">💾</button>
+                                </form>
+                            </td>
+                            <td style="padding: 14px;">
+                                <form action="/admin/update_status/{{ ticket.id }}" method="POST" style="margin: 0;">
+                                    <select name="statut" 
+                                            class="select-status 
+                                            {% if ticket.statut == 'Nouveau' %}status-nouveau
+                                            {% elif ticket.statut in ['En cours', 'En Cours'] %}status-en-cours
+                                            {% else %}status-cloture{% endif %}" 
+                                            onchange="this.form.submit()">
                                         <option value="Nouveau" {% if ticket.statut == 'Nouveau' %}selected{% endif %}>Nouveau</option>
-                                        <option value="En cours" {% if ticket.statut == 'En cours' %}selected{% endif %}>En cours</option>
-                                        <option value="Résolu" {% if ticket.statut == 'Résolu' %}selected{% endif %}>Résolu</option>
-                                        <option value="Fermé" {% if ticket.statut == 'Fermé' %}selected{% endif %}>Fermé</option>
+                                        <option value="En cours" {% if ticket.statut in ['En cours', 'En Cours'] %}selected{% endif %}>En cours</option>
+                                        <option value="Résolu" {% if ticket.statut in ['Résolu', 'Clôturé', 'Cloture'] %}selected{% endif %}>Clôturé</option>
                                     </select>
                                 </form>
                             </td>
-                            <td style="padding: 14px 16px; text-align: center; white-space: nowrap;">
-                                <button class="btn-view" onclick='showModal({{ {
-                                    "id": ticket.id,
-                                    "date": ticket.date_creation.strftime("%d/%m/%Y %H:%M") if ticket.date_creation else "N/A",
-                                    "entreprise": ticket.entreprise,
-                                    "nom_prenom": ticket.nom_prenom,
-                                    "email": ticket.email,
-                                    "telephone": ticket.telephone,
-                                    "module": ticket.module,
-                                    "urgence": ticket.urgence,
-                                    "sujet": ticket.sujet,
-                                    "description": ticket.description,
-                                    "statut": ticket.statut
-                                } | tojson }})'>Détails</button>
+                            <td style="padding: 14px;">
+                                <div style="display: flex; gap: 6px; justify-content: center; align-items: center;">
+                                    <a href="mailto:{{ ticket.email }}?subject=Suite au ticket #{{ ticket.id }} : {{ ticket.sujet }}" class="btn-action btn-reply">Répondre</a>
+                                    
+                                    <button class="btn-action btn-invoice"
+                                            data-ticket="{{ {
+                                                'id': ticket.id,
+                                                'entreprise': ticket.entreprise,
+                                                'nom_prenom': ticket.nom_prenom,
+                                                'email': ticket.email,
+                                                'telephone': ticket.telephone,
+                                                'sujet': ticket.sujet,
+                                                'module': ticket.module,
+                                                'temps_estime': ticket.temps_estime or 0
+                                            } | tojson | forceescape }}"
+                                            onclick="openInvoiceModal(this)">Facture</button>
 
-                                <form action="/admin/delete/{{ ticket.id }}" method="POST" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer définitivement ce ticket ?');">
-                                    <button type="submit" class="btn-delete">Supprimer</button>
-                                </form>
+                                    <button class="btn-action btn-view"
+                                            data-ticket="{{ {
+                                                'id': ticket.id,
+                                                'date': ticket.date_creation.strftime('%d/%m/%Y %H:%M') if ticket.date_creation else 'N/A',
+                                                'entreprise': ticket.entreprise,
+                                                'nom_prenom': ticket.nom_prenom,
+                                                'email': ticket.email,
+                                                'telephone': ticket.telephone,
+                                                'module': ticket.module,
+                                                'urgence': ticket.urgence,
+                                                'temps_estime': ticket.temps_estime or 0,
+                                                'sujet': ticket.sujet,
+                                                'description': ticket.description,
+                                                'fichier_joint': ticket.fichier_joint,
+                                                'statut': ticket.statut
+                                            } | tojson | forceescape }}"
+                                            onclick="showModal(this)">Détails</button>
+
+                                    <form action="/admin/delete/{{ ticket.id }}" method="POST" style="margin: 0;" onsubmit="return confirm('Supprimer ce ticket ?');">
+                                        <button type="submit" class="btn-delete">Supprimer</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="8" style="padding: 40px; text-align: center; color: #94a3b8;">
-                                Aucun ticket enregistré dans la base de données.
-                            </td>
+                            <td colspan="8" style="padding: 40px; text-align: center; color: #94a3b8;">Aucun ticket enregistré.</td>
                         </tr>
                     {% endif %}
                 </tbody>
@@ -281,99 +416,220 @@
         </div>
     </main>
 
-    <!-- FENÊTRE MODAL DE DÉTAILS -->
+    <!-- MODAL DÉTAILS ENRICHI -->
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header">
-                <h3 id="modalTicketTitle" style="font-size: 16px; font-weight: 700;">Ticket #</h3>
-                <button class="btn-close" onclick="closeModal()">&times;</button>
+                <h3 id="modalTicketTitle">Détails du Ticket #</h3>
+                <button class="btn-close" onclick="closeModal()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">&times;</button>
             </div>
             <div class="modal-body">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div class="modal-field">
-                        <label>Raison Sociale</label>
-                        <p id="mEntreprise" style="font-weight: 700;"></p>
-                    </div>
-                    <div class="modal-field">
-                        <label>Demandeur</label>
-                        <p id="mDemandeur"></p>
-                    </div>
-                    <div class="modal-field">
-                        <label>Email</label>
-                        <p id="mEmail"></p>
-                    </div>
-                    <div class="modal-field">
-                        <label>Téléphone</label>
-                        <p id="mTelephone"></p>
-                    </div>
-                    <div class="modal-field">
-                        <label>Solution Concernée</label>
-                        <p id="mModule" style="font-weight: 600; color: #086385;"></p>
-                    </div>
-                    <div class="modal-field">
-                        <label>Niveau d'urgence</label>
-                        <p id="mUrgence" style="font-weight: 700;"></p>
-                    </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                    <div><label style="font-size:11px; color:#64748b; font-weight:700;">RAISON SOCIALE</label><p id="mEntreprise" style="font-weight:700; color:#092c3e; margin: 4px 0 0 0;"></p></div>
+                    <div><label style="font-size:11px; color:#64748b; font-weight:700;">DEMANDEUR</label><p id="mDemandeur" style="margin: 4px 0 0 0;"></p></div>
+                    <div><label style="font-size:11px; color:#64748b; font-weight:700;">EMAIL</label><p id="mEmail" style="margin: 4px 0 0 0;"></p></div>
+                    <div><label style="font-size:11px; color:#64748b; font-weight:700;">TÉLÉPHONE</label><p id="mTelephone" style="margin: 4px 0 0 0;"></p></div>
+                    <div><label style="font-size:11px; color:#64748b; font-weight:700;">MODULE CONCERNÉ</label><p id="mModule" style="margin: 4px 0 0 0; font-weight:600; color:#0a4d68;"></p></div>
+                    <div><label style="font-size:11px; color:#64748b; font-weight:700;">DEGRÉ D'URGENCE</label><p id="mUrgence" style="margin: 4px 0 0 0; font-weight:700;"></p></div>
+                    <div style="grid-column: span 2;"><label style="font-size:11px; color:#64748b; font-weight:700;">TEMPS PASSÉ SAISI</label><p id="mTemps" style="margin: 4px 0 0 0; font-weight:700; color:#0a4d68;"></p></div>
                 </div>
 
-                <div class="modal-field" style="margin-top: 10px;">
-                    <label>Sujet de l'incident</label>
-                    <p id="mSujet" style="font-weight: 700; font-size: 15px; color: #092c3e;"></p>
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size:11px; color:#64748b; font-weight:700;">SUJET DU PROBLÈME</label>
+                    <p id="mSujet" style="font-weight:700; color:#092c3e; font-size:15px; margin: 4px 0 0 0;"></p>
                 </div>
 
-                <div class="modal-field">
-                    <label>Description complète transmise par le client</label>
-                    <div id="mDescription" class="modal-description-box"></div>
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size:11px; color:#64748b; font-weight:700;">DESCRIPTION DÉTAILLÉE DU CLIENT</label>
+                    <div id="mDescription" style="background:#ffffff; padding:15px; border-radius:6px; font-size:13px; border:1px solid #cbd5e1; white-space: pre-wrap; margin-top: 6px; line-height: 1.5; color: #1e293b;"></div>
+                </div>
+
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 15px;">
+                    <label style="font-size:11px; color:#64748b; font-weight:700; display:block; margin-bottom: 8px;">PIÈCE JOINTE DU CLIENT</label>
+                    <div id="mFileContainer"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Recherche en temps réel dans le tableau
-        function filterTable() {
-            var input = document.getElementById("searchInput");
-            var filter = input.value.toLowerCase();
-            var table = document.getElementById("ticketsTable");
-            var tr = table.getElementsByTagName("tr");
+    <!-- MODAL FACTURE -->
+    <div id="invoiceOverlay" class="modal-overlay">
+        <div class="modal-card" style="max-width: 800px; background: white;">
+            <div class="modal-header no-print">
+                <h3>Générateur de Facture PRO</h3>
+                <button class="btn-close" onclick="closeInvoiceModal()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">&times;</button>
+            </div>
+            <div class="modal-body" id="invoicePrintArea" style="background: white; padding: 40px;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 30px;">
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo BFS Solutions" style="height: 60px; width: auto; object-fit: contain;">
+                        <div>
+                            <h2 style="color: #092c3e; margin: 0; font-size: 20px; font-weight: 800;">BFS SOLUTIONS</h2>
+                            <p style="font-size: 12px; color: #64748b; margin: 4px 0 0 0;">Service Support Technique & IT</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <h1 style="margin: 0; color: #0a4d68; font-size: 26px; text-transform: uppercase;">Facture</h1>
+                        <p style="font-weight: 700; color: #334155; margin: 8px 0 4px 0;">N° FAC-2026-<span id="invTicketId"></span></p>
+                        <p style="font-size: 13px; color: #64748b; margin: 0;">Date : <span id="invDate"></span></p>
+                    </div>
+                </div>
 
-            for (var i = 1; i < tr.length; i++) {
-                var rowText = tr[i].innerText.toLowerCase();
-                if (rowText.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
+                <div style="display: flex; justify-content: space-between; margin-bottom: 30px; gap: 20px;">
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; flex: 1; border: 1px solid #e2e8f0;">
+                        <p style="font-size: 11px; color: #64748b; text-transform: uppercase; margin: 0 0 10px 0; font-weight: 700;">Facturé à :</p>
+                        <p id="invClient" style="margin: 0 0 6px 0; color: #092c3e; font-weight: 800; font-size: 16px;"></p>
+                        <p id="invContactName" style="margin: 0 0 4px 0; color: #475569; font-size: 14px;"></p>
+                        <p id="invEmail" style="margin: 0 0 4px 0; color: #475569; font-size: 13px;"></p>
+                        <p id="invTel" style="margin: 0; color: #475569; font-size: 13px;"></p>
+                    </div>
+                </div>
+
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 14px;">
+                    <thead>
+                        <tr style="background: #092c3e; color: white; text-align: left;">
+                            <th style="padding: 12px 15px; border: 1px solid #092c3e;">Description des prestations</th>
+                            <th style="padding: 12px 15px; border: 1px solid #092c3e; width: 130px; text-align: center;">Heures</th>
+                            <th style="padding: 12px 15px; border: 1px solid #092c3e; width: 140px; text-align: right;">Prix Unitaire (DT)</th>
+                            <th style="padding: 12px 15px; border: 1px solid #092c3e; width: 120px; text-align: right;">Total HT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 15px; color: #1e293b;">
+                                <strong style="display: block; margin-bottom: 4px; color: #0a4d68;">Assistance Support - Module : <span id="invModule"></span></strong>
+                                <span id="invSujet" style="color: #64748b; font-size: 13px;"></span>
+                            </td>
+                            <td style="padding: 15px; text-align: center;">
+                                <input type="number" id="invHoursInput" value="1.0" step="0.5" min="0" style="width: 70px; text-align: center; padding: 6px; font-size: 14px; font-weight: 700; border: 1px solid #cbd5e1; border-radius: 4px;" oninput="calculateInvoice()" class="no-print">
+                                <span id="invHoursPrint" class="print-only" style="font-weight: 700;">1.0</span> h
+                            </td>
+                            <td style="padding: 15px; text-align: right;">
+                                <input type="number" id="invRateInput" value="60" step="5" min="0" style="width: 80px; text-align: right; padding: 6px; font-size: 14px; font-weight: 700; border: 1px solid #cbd5e1; border-radius: 4px;" oninput="calculateInvoice()" class="no-print">
+                                <span id="invRatePrint" class="print-only">60</span> DT
+                            </td>
+                            <td style="padding: 15px; font-weight: 700; text-align: right; color: #092c3e;" id="invTotalRow">
+                                60.00 DT
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="display: flex; justify-content: flex-end;">
+                    <div style="width: 300px; border-top: 2px solid #cbd5e1; padding-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 18px; font-weight: 800; color: #0a4d68;">
+                            <span>NET À PAYER :</span>
+                            <span id="invFinalTotal">60.00 DT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="no-print" style="margin-top: 30px; text-align: right; display: flex; gap: 10px; justify-content: flex-end; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                    <button onclick="window.print()" style="background-color: #0a4d68; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: 600; cursor: pointer;">Imprimer / PDF</button>
+                    <button onclick="closeInvoiceModal()" style="background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 12px 24px; border-radius: 6px; font-weight: 600; cursor: pointer;">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOTEUR DE FILTRAGE JAVASCRIPT -->
+    <script>
+        function applyFilters() {
+            const searchText = document.getElementById("searchInput").value.toLowerCase();
+            const statusFilter = document.getElementById("filterStatus").value;
+            const urgencyFilter = document.getElementById("filterUrgency").value;
+            const moduleFilter = document.getElementById("filterModule").value;
+
+            const rows = document.querySelectorAll("#ticketsTable tbody tr");
+
+            rows.forEach(row => {
+                if (row.children.length === 1) return; // Ignores empty state row
+
+                const fullText = row.innerText.toLowerCase();
+                const status = row.getAttribute("data-status") || "";
+                const urgency = row.getAttribute("data-urgency") || "";
+                const moduleName = row.getAttribute("data-module") || "";
+
+                const matchSearch = fullText.includes(searchText);
+                const matchStatus = (statusFilter === "ALL" || status === statusFilter || (statusFilter === "Résolu" && ["Résolu", "Clôturé", "Cloture"].includes(status)));
+                const matchUrgency = (urgencyFilter === "ALL" || urgency === urgencyFilter);
+                const matchModule = (moduleFilter === "ALL" || moduleName === moduleFilter);
+
+                if (matchSearch && matchStatus && matchUrgency && matchModule) {
+                    row.style.display = "";
                 } else {
-                    tr[i].style.display = "none";
+                    row.style.display = "none";
                 }
-            }
+            });
         }
 
-        // Affichage de la fenêtre Modal
-        function showModal(data) {
-            document.getElementById("modalTicketTitle").innerText = "Ticket #" + data.id + " — " + data.date;
-            document.getElementById("mEntreprise").innerText = data.entreprise;
-            document.getElementById("mDemandeur").innerText = data.nom_prenom;
-            document.getElementById("mEmail").innerText = data.email;
-            document.getElementById("mTelephone").innerText = data.telephone;
-            document.getElementById("mModule").innerText = data.module;
-            document.getElementById("mUrgence").innerText = data.urgence;
-            document.getElementById("mSujet").innerText = data.sujet;
-            document.getElementById("mDescription").innerText = data.description;
+        function resetFilters() {
+            document.getElementById("searchInput").value = "";
+            document.getElementById("filterStatus").value = "ALL";
+            document.getElementById("filterUrgency").value = "ALL";
+            document.getElementById("filterModule").value = "ALL";
+            applyFilters();
+        }
+
+        function showModal(btnElement) {
+            const data = JSON.parse(btnElement.getAttribute('data-ticket'));
+
+            document.getElementById("modalTicketTitle").innerText = "Détails du Ticket #" + data.id;
+            document.getElementById("mEntreprise").innerText = data.entreprise || "";
+            document.getElementById("mDemandeur").innerText = data.nom_prenom || "";
+            document.getElementById("mEmail").innerText = data.email || "";
+            document.getElementById("mTelephone").innerText = data.telephone || "";
+            document.getElementById("mModule").innerText = data.module || "";
+            document.getElementById("mUrgence").innerText = data.urgence || "";
+            document.getElementById("mTemps").innerText = (data.temps_estime || 0) + " heure(s)";
+            document.getElementById("mSujet").innerText = data.sujet || "";
+            document.getElementById("mDescription").innerText = data.description || "";
+            
+            const container = document.getElementById("mFileContainer");
+            if (data.fichier_joint) {
+                container.innerHTML = `
+                    <a href="/static/uploads/${encodeURIComponent(data.fichier_joint)}" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #e0f2fe; color: #0369a1; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 700; border: 1px solid #bae6fd;">
+                        📥 Consulter / Télécharger (${data.fichier_joint})
+                    </a>`;
+            } else {
+                container.innerHTML = `<span style="color: #94a3b8; font-size: 13px; font-style: italic;">Aucun fichier joint par le client.</span>`;
+            }
 
             document.getElementById("modalOverlay").style.display = "flex";
         }
+        function closeModal() { document.getElementById("modalOverlay").style.display = "none"; }
 
-        function closeModal() {
-            document.getElementById("modalOverlay").style.display = "none";
+        function openInvoiceModal(btnElement) {
+            const data = JSON.parse(btnElement.getAttribute('data-ticket'));
+            const dateDuJour = new Date().toLocaleDateString('fr-FR');
+            
+            document.getElementById("invTicketId").innerText = data.id;
+            document.getElementById("invDate").innerText = dateDuJour;
+            document.getElementById("invClient").innerText = data.entreprise || "";
+            document.getElementById("invContactName").innerText = "À l'attention de : " + (data.nom_prenom || "");
+            document.getElementById("invEmail").innerText = data.email || "";
+            document.getElementById("invTel").innerText = data.telephone ? "Tél : " + data.telephone : "";
+            document.getElementById("invModule").innerText = data.module || "";
+            document.getElementById("invSujet").innerText = data.sujet || "";
+            document.getElementById("invHoursInput").value = data.temps_estime > 0 ? data.temps_estime : 1.0;
+
+            calculateInvoice();
+            document.getElementById("invoiceOverlay").style.display = "flex";
         }
 
-        // Fermer le modal en cliquant à l'extérieur
-        window.onclick = function(event) {
-            var overlay = document.getElementById("modalOverlay");
-            if (event.target == overlay) {
-                closeModal();
-            }
+        function calculateInvoice() {
+            let h = parseFloat(document.getElementById("invHoursInput").value) || 0;
+            let rate = parseFloat(document.getElementById("invRateInput").value) || 0;
+            let total = (h * rate).toFixed(2);
+
+            document.getElementById("invHoursPrint").innerText = h;
+            document.getElementById("invRatePrint").innerText = rate;
+            document.getElementById("invTotalRow").innerText = total + " DT";
+            document.getElementById("invFinalTotal").innerText = total + " DT";
         }
+
+        function closeInvoiceModal() { document.getElementById("invoiceOverlay").style.display = "none"; }
     </script>
-
 </body>
 </html>

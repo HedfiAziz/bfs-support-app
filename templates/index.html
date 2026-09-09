@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BFS | Portail Support & Déclaration d'incidents Sage XRT</title>
-    
-<meta name="description" content="Plateforme officielle de gestion des incidents et tickets d'assistance pour le périmètre Sage XRT et Cash Management de BFS Solutions.">
-<meta name="robots" content="index, follow">
     <link rel="icon" href="{{ url_for('static', filename='icon.png') }}" type="image/png">
     <!-- Importation de la police Google Fonts : Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,28 +39,29 @@
     <main class="main-container">
         <div class="form-card">
             <form action="/submit" method="POST" enctype="multipart/form-data">
+            
                 
                 <div class="form-section">
                     <h3 class="section-title"><span class="step-num">1</span> Coordonnées du Client</h3>
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="entreprise">Raison Sociale / Entreprise *</label>
-                            <input type="text" id="entreprise" name="entreprise" placeholder="ex: Poulina Group, Danone, Aziza..." required>
+                            <input type="text" id="entreprise" name="entreprise" required>
                         </div>
                         <div class="form-group">
                             <label for="nom_prenom">Nom & Prénom du Demandeur *</label>
-                            <input type="text" id="nom_prenom" name="nom_prenom" placeholder="ex: Mohamed Ben Ali" required>
+                            <input type="text" id="nom_prenom" name="nom_prenom"  required>
                         </div>
                     </div>
 
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="telephone">Téléphone Direct *</label>
-                            <input type="tel" id="telephone" name="telephone" placeholder="+216 98 000 000" required>
+                            <input type="tel" id="telephone" name="telephone"  required>
                         </div>
                         <div class="form-group">
                             <label for="email">Adresse Email Professionnelle *</label>
-                            <input type="email" id="email" name="email" placeholder="nom@entreprise.tn" required>
+                            <input type="email" id="email" name="email"  required>
                         </div>
                     </div>
                 </div>
@@ -98,7 +96,7 @@
 
                     <div class="form-group">
                         <label for="sujet">Intitulé / Objet du problème *</label>
-                        <input type="text" id="sujet" name="sujet" placeholder="ex: Erreur lors de la télétransmission du fichier CFONB" required>
+                        <input type="text" id="sujet" name="sujet"  required>
                     </div>
 
                     <div class="form-group">
@@ -111,7 +109,8 @@
                             <strong>Joindre une pièce jointe (Optionnel)</strong>
                             <small>Formats acceptés : PNG, JPG, PDF, ZIP, LOG (Max: 10 Mo)</small>
                         </label>
-                        <input type="file" id="fichier" name="fichier">
+                        <input type="file" id="fichier" name="fichier_joint">
+                        
                     </div>
                 </div>
 
