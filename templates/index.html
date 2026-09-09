@@ -40,7 +40,6 @@
         <div class="form-card">
             <form action="/submit" method="POST" enctype="multipart/form-data">
             
-                
                 <div class="form-section">
                     <h3 class="section-title"><span class="step-num">1</span> Coordonnées du Client</h3>
                     <div class="grid-2">
@@ -50,18 +49,18 @@
                         </div>
                         <div class="form-group">
                             <label for="nom_prenom">Nom & Prénom du Demandeur *</label>
-                            <input type="text" id="nom_prenom" name="nom_prenom"  required>
+                            <input type="text" id="nom_prenom" name="nom_prenom" required>
                         </div>
                     </div>
 
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="telephone">Téléphone Direct *</label>
-                            <input type="tel" id="telephone" name="telephone"  required>
+                            <input type="tel" id="telephone" name="telephone" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Adresse Email Professionnelle *</label>
-                            <input type="email" id="email" name="email"  required>
+                            <input type="email" id="email" name="email" required>
                         </div>
                     </div>
                 </div>
@@ -72,14 +71,17 @@
                     <div class="grid-2">
                         <div class="form-group">
                             <label for="module">Solution concernée *</label>
-                            <select name="module" id="module" required class="form-control">
-                                <option value="" disabled selected>-- Sélectionnez votre produit --</option>
-                                <option value="Sage SXA installation">Sage SXA Installation</option>
-                                <option value="Sage SXA administration">Sage SXA Administration</option>
-                                <option value="Sage SXA tresorerie">Sage SXA Tresorerie</option>
-                                <option value="Sage SXA OPERATION FINANCIERE">Sage SXA Operation Financiere</option>
-                                <option value="Raprochement comptable">Sage SXA Raprochement Comptable</option>
-                                <option value="Autre">Autre</option>
+                            <select id="module" name="module" required>
+                                <option value="">-- Sélectionnez votre produit --</option>
+                                <optgroup label="Solutions & Services BFS – Sage SXA">
+                                    <option value="Sage SXA – Installation & Mise en œuvre">Sage SXA – Installation & Mise en œuvre</option>
+                                    <option value="Sage SXA – Trésorerie">Sage SXA – Trésorerie</option>
+                                    <option value="Sage SXA – Espace Bancaire">Sage SXA – Espace Bancaire</option>
+                                    <option value="Sage SXA – Opérations Financières">Sage SXA – Opérations Financières</option>
+                                    <option value="Sage SXA – Rapprochement Comptable">Sage SXA – Rapprochement Comptable</option>
+                                    <option value="Sage SXA – Administration">Sage SXA – Administration</option>
+                                    <option value="Dashboard / BI / Power-BFS">Dashboard / BI / Power-BFS</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div class="form-group">
@@ -95,7 +97,7 @@
 
                     <div class="form-group">
                         <label for="sujet">Intitulé / Objet du problème *</label>
-                        <input type="text" id="sujet" name="sujet"  required>
+                        <input type="text" id="sujet" name="sujet" required>
                     </div>
 
                     <div class="form-group">
@@ -109,7 +111,6 @@
                             <small>Formats acceptés : PNG, JPG, PDF, ZIP, LOG (Max: 10 Mo)</small>
                         </label>
                         <input type="file" id="fichier" name="fichier_joint">
-                        
                     </div>
                 </div>
 
@@ -133,10 +134,8 @@
                     <span id="alt-logo-footer" class="footer-logo-text" style="display:none;">BFS <span>SOLUTIONS</span></span>
                 </div>
                 <p>Expert du Cash Management, de la Digitalisation Financière et du Pilotage de Trésorerie.</p>
-                
                 <p class="footer-link"><a href="https://www.linkedin.com/in/imed-lakhdhar-2a569b42/" target="_blank" rel="noopener">LinkedIn</a></p>
             </div>
-
 
             <!-- Colonne 2 : Navigation -->
             <div class="footer-col">
